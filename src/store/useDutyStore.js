@@ -26,11 +26,12 @@ const dutyStore = (set)=> ({
     fetchAll: async () => {
         //function body
         try {
-            const personnel = await api.get('/personnel')
+            const personnel = await api.get('/personnel');
             // console.log("This is res in Zustand", personnel)
-
+            const locations = await api.get('/locations')
             set({
-                personnel:personnel
+                personnel:personnel,
+                locations:locations                
             })
         } catch (error) {
             console.log(error)
