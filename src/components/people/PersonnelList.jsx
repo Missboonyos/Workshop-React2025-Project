@@ -5,8 +5,8 @@ import useDutyStore from '../../store/useDutyStore'
 const PersonnelList = () => {
   //Zustand
   //Selecting multiple state slices
-  const clover = useDutyStore((state)=>state.polar)
-  console.log(clover)
+  const personnel = useDutyStore((state)=>state.personnel)
+  console.log(personnel)
   
   // console.log(clover.rabbit)
   // clover.rabbit()
