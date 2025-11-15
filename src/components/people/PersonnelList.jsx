@@ -8,7 +8,7 @@ const PersonnelList = () => {
   //Zustand
   //Selecting multiple state slices
   const personnel = useDutyStore((state) => state.personnel);
-  console.log(personnel);
+  // console.log(personnel);
 
   // console.log(clover.rabbit)
   // clover.rabbit()

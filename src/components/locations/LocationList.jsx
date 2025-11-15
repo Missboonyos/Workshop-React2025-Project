@@ -7,7 +7,7 @@ const LocationList = () => {
   // JS
 
   const locations = useDutyStore((s) => s.locations);
-  console.log(locations);
+  // console.log(locations);
 
   return (
     <div

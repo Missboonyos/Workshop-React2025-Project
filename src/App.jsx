@@ -1,5 +1,5 @@
 //rafce
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PersonnelList from './components/people/PersonnelList'
 import Header from './components/layout/Header'
 import MapView from './components/map/MapView'
@@ -9,6 +9,9 @@ import useDutyStore from './store/useDutyStore'
 
 const App = () => {
   // JS
+  const [adding, setAdding] = useState(false)
+
+
 
   // This is to get into global state: access to everything pattern
   const fetchAll = useDutyStore((state) => state.fetchAll)
@@ -58,7 +61,7 @@ const App = () => {
       <PersonnelList />
       
       <div className='flex flex-col flex-1'>
-        <Header />
+        <Header adding={adding} setAdding={setAdding} />
         
         <div className='flex flex-1 overflow-hidden'>
           <MapView />
