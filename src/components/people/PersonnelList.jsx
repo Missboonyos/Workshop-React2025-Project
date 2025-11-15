@@ -13,6 +13,11 @@ const PersonnelList = () => {
   // console.log(clover.rabbit)
   // clover.rabbit()
 
+  const onDragStart = (e,personId)=> {
+    // console.log(e,personId);
+    e.dataTransfer.setData('text/plain', personId)
+  }
+
   return (
     <div className="w-80 bg-white overflow-y-auto">
       <div className="p-6 border-b border-gray-800">
@@ -30,7 +35,9 @@ const PersonnelList = () => {
         {personnel.map((item) => {
           return (
             <div
-            key={item.id}
+              key={item.id}
+              draggable={true} // default value = true, can shorthand only "draggable"
+              onDragStart={(e)=> onDragStart(e, item.id)}
               className="flex items-center gap-3 p-3
         bg-blue-100 border border-blue-300 rounded-lg
        cursor-move hover:shadow-md hover:scale-105"

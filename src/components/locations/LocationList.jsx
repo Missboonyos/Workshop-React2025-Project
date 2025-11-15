@@ -8,6 +8,10 @@ const LocationList = () => {
 
   const locations = useDutyStore((s) => s.locations);
   // console.log(locations);
+  const onDropToLocation = (e, locationId) => {
+    const personId = e.dataTransfer.getData('text/plain')
+    console.log('personId', locationId)
+  }
 
   return (
     <div
@@ -30,6 +34,8 @@ const LocationList = () => {
         {locations.map((item) => {
           return (
             <div
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => onDropToLocation(e, item.id)}
               key={item.id}
               className="border-2 border-dashed rounded-md
                border-gray-400 bg-gray-100"
