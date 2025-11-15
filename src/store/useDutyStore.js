@@ -28,12 +28,26 @@ const dutyStore = (set, get)=> ({
         //function body
         try {
             // Declare variable personnel & locations here are recommended when we want to store any returned values
-            const personnel = await api.get('/personnel');
+            // const personnel = await api.get("/personnel");
             // console.log("This is res in Zustand", personnel)
-            const locations = await api.get('/locations')
+            // const locations = await api.get("/locations");
+            // const assignments = await api.get("/locationPersonnel");
+
+            //-------------------
+            // Promise.all()
+            // It's used i/o await api.get() above to allow all functions work simultaneously, no need to wait the 1st function to finish, then go to the next function
+            // Syntax: const rabbit = await Promise.all([element1,el2,el3,..])
+            const [personnel, locations, assignments] = await Promise.all([
+                api.get("/personnel"),
+                api.get("/locations"),
+                api.get("/locationPersonnel")
+            ])
+                // console.log('rabbit', rabbit[0])
+
             set({
-                personnel:personnel,
-                locations:locations                
+                personnel: personnel,
+                locations: locations,
+                assignments: assignments               
             })
         } catch (error) {
             console.log(error)
@@ -71,7 +85,21 @@ const dutyStore = (set, get)=> ({
         } catch (error) {
             console.log('Add Location Error', error)
         }
+    },
+
+    assignPerson: async (personId, locationId) => {
+        //function body
+        try {
+            console.log(personId, locationId)
+            const res = await api.post('/locationPersonnel', {
+                personId:personId, 
+                locationId:locationId
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
+
 })
 
 const useDutyStore = create (dutyStore)

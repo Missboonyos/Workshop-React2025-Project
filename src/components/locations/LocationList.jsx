@@ -7,10 +7,16 @@ const LocationList = () => {
   // JS
 
   const locations = useDutyStore((s) => s.locations);
+  const assignPerson = useDutyStore((state)=>state.assignPerson)
+  const assignments = useDutyStore((state)=>state.assignments)
+  
+  console.log(assignments)
+
   // console.log(locations);
-  const onDropToLocation = (e, locationId) => {
+  const onDropToLocation = async (e, locationId) => {
     const personId = e.dataTransfer.getData('text/plain')
-    console.log('personId', locationId)
+    // console.log('personId', locationId)
+    await assignPerson(personId, locationId)
   }
 
   return (
