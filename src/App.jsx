@@ -10,8 +10,7 @@ import useDutyStore from './store/useDutyStore'
 const App = () => {
   // JS
   const [adding, setAdding] = useState(false)
-
-
+  const [pending, setPending] = useState(null)
 
   // This is to get into global state: access to everything pattern
   const fetchAll = useDutyStore((state) => state.fetchAll)
@@ -23,7 +22,24 @@ const App = () => {
     fetchAll()
   }, [])
 
+  // Function to store Latitude, Longitude
+  const onPick = (lat, lng)=> {
+    // function body
+    // setPending in shorthand object syntax pattern
+    setPending({ lat, lng })
+  }
+  console.log(pending)
 
+  // Function to store Latitude, Longitude
+  // setPending in full object syntax pattern
+  // const onPick = (lat, lng)=> {
+  //   // function body
+  //   setPending({
+  //     lat: lat,
+  //     lng: lng
+  //   })
+  // }
+  // console.log(pending)
 
 
 
@@ -64,7 +80,7 @@ const App = () => {
         <Header adding={adding} setAdding={setAdding} />
         
         <div className='flex flex-1 overflow-hidden'>
-          <MapView />
+          <MapView adding={adding} onPick={onPick} />
           <LocationList />
         </div>
       </div>
