@@ -1,34 +1,35 @@
 //rafce
-import React, { useEffect, useState } from 'react'
-import PersonnelList from './components/people/PersonnelList'
-import Header from './components/layout/Header'
-import MapView from './components/map/MapView'
-import LocationList from './components/locations/LocationList'
-import axios from 'axios'
-import useDutyStore from './store/useDutyStore'
+import React, { useEffect, useState } from "react";
+import PersonnelList from "./components/people/PersonnelList";
+import Header from "./components/layout/Header";
+import MapView from "./components/map/MapView";
+import LocationList from "./components/locations/LocationList";
+import axios from "axios";
+import useDutyStore from "./store/useDutyStore";
+import AddLocationModal from "./components/locations/AddLocationModal";
 
 const App = () => {
   // JS
-  const [adding, setAdding] = useState(false)
-  const [pending, setPending] = useState(null)
+  const [adding, setAdding] = useState(false);
+  const [pending, setPending] = useState(null);
 
   // This is to get into global state: access to everything pattern
-  const fetchAll = useDutyStore((state) => state.fetchAll)
+  const fetchAll = useDutyStore((state) => state.fetchAll);
 
   // useEffect is used when we want functions run automatically
   // useEffect needs 2 things; arrow fn & dependency (empty array)
-  useEffect(()=>{ 
+  useEffect(() => {
     //function body
-    fetchAll()
-  }, [])
+    fetchAll();
+  }, []);
 
   // Function to store Latitude, Longitude
-  const onPick = (lat, lng)=> {
+  const onPick = (lat, lng) => {
     // function body
     // setPending in shorthand object syntax pattern
-    setPending({ lat, lng })
-  }
-  console.log(pending)
+    setPending({ lat, lng });
+  };
+  console.log(pending);
 
   // Function to store Latitude, Longitude
   // setPending in full object syntax pattern
@@ -41,9 +42,7 @@ const App = () => {
   // }
   // console.log(pending)
 
-
-
-//-------------------------------
+  //-------------------------------
   // create this function: fetchAll (it's promise; need async-await) and will be called to use in useEffect above
   // this coding pattern without try..catch can function but it's difficult to handle the error, ie, wrong endpoint with error 404 not found
   // const fetchAll = async()=> {
@@ -54,39 +53,46 @@ const App = () => {
   //   console.log(res.data)
   // }
 
-//-------------------------------
+  //-------------------------------
   // using try...catch
   // const fetchAll = async()=> {
-    //function body
-    // try {
-    //   const res = await axios.get('http://localhost:3000/personnel')
+  //function body
+  // try {
+  //   const res = await axios.get('http://localhost:3000/personnel')
 
-      // console.log(res)
-      // console.log(res.data) //the result we get here will be kept in useEffect
+  // console.log(res)
+  // console.log(res.data) //the result we get here will be kept in useEffect
 
-    // } catch (error) {
-    //   console.log("Rabbit on the moon", error)
-      //console.log result & AxiosError msg will be displayed when the errors occur.
-      // console.log(error.response.data) //This is to get the msg "Not Found". Then, we'll display it on Modal
+  // } catch (error) {
+  //   console.log("Rabbit on the moon", error)
+  //console.log result & AxiosError msg will be displayed when the errors occur.
+  // console.log(error.response.data) //This is to get the msg "Not Found". Then, we'll display it on Modal
   //   }
   // }
-//-------------------------------
+  //-------------------------------
 
   return (
-    <div className='flex h-screen bg-green-100'>
+    <div className="flex h-screen bg-green-100">
       <PersonnelList />
-      
-      <div className='flex flex-col flex-1'>
+
+      <div className="flex flex-col flex-1">
         <Header adding={adding} setAdding={setAdding} />
-        
-        <div className='flex flex-1 overflow-hidden'>
+
+        <div className="flex flex-1 overflow-hidden">
           <MapView adding={adding} onPick={onPick} />
           <LocationList />
         </div>
       </div>
-
+      {pending && (
+        <AddLocationModal
+          lat={pending.lat}
+          lng={pending.lng}
+          setAdding={setAdding}
+          setPending={setPending}
+        />
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

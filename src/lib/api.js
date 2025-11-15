@@ -56,6 +56,7 @@ const client = axios.create({
 export const api = {
         // const data with destructuring **
         // Get: Need path (url)
+        // Get here isn't HTML method. It's a variable name we assign. 
         async get(path) {
             //function body
             const {data} = await client.get(path)
@@ -64,6 +65,7 @@ export const api = {
         
         // Post : Need path (url) & body that is data
         // const data before destructuring data
+        // Post here isn't HTML method. It's a variable name we assign.
         async post(path, body){
             //function body
             const {data} = await client.post(path,body)
